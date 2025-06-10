@@ -110,20 +110,35 @@ class Platformer extends Phaser.Scene {
         this.console.innerHTML += `<label id="y">x: ${my.sprite.player.y}, </label>`;
         this.console.innerHTML += `<label id="charge">c: ${this.jump_charge} </label><br>`;
 
+        this.console.innerHTML +=  `<label class="prompt">to_x: </label> `;
+        this.console.innerHTML += `<input id="x_cord"  type="number"> `;
+        this.console.innerHTML += `<label class="prompt"> to_y: </label> `;
+        this.console.innerHTML += `<input id="y_cord"  type="number"> `;
+        this.console.innerHTML += `<button class="tp">Teleport</button><br>`;
+
         for (let debug of this.debug_list) {
             this.console.innerHTML += `<label class="prompt">${debug.toLowerCase()} </label> `;
             this.console.innerHTML += `<input class="input" id="${debug}" type="number" value="${this[debug]}"><br> `;
         }
 
-        this.console.innerHTML += `<button>Apply Changes</button>`;
+        this.console.innerHTML += `<button class="apply">Apply Changes</button>`;
 
         document.body.appendChild(this.console);
 
+        let player = my.sprite.player;
+        document.querySelector(".tp").addEventListener("click", function () {
+            if (document.getElementById("x_cord").value != null) player.x = parseInt(document.getElementById("x_cord").value);
+            if (document.getElementById("y_cord").value != null) player.y = parseInt(document.getElementById("y_cord").value);
+            player.setVelocityX(0);
+            player.setAccelerationX(0)
+            player.setVelocityY(0);
+            player.setAccelerationY(0);
+        });
+
         let game = this;
-        document.querySelector("button").addEventListener("click", function () {
-            for (let query of document.querySelectorAll("input")) {
+        document.querySelector(".apply").addEventListener("click", function () {
+            for (let query of document.querySelectorAll(".input")) {
                 game[query.id] = parseInt(query.value);
-                //console.log(query.id, query.value);
             }
         });
 
