@@ -33,6 +33,16 @@ class Load extends Phaser.Scene {
     }
 
     create() {
+        let style = `
+            h1 { font-size: 30px; } 
+            label { font-size: 35px; } 
+            input { font-size: 30px; } 
+            button { font-size: 30px; }
+        `
+        const stylesheet = document.createElement("style");
+        stylesheet.textContent = style;
+        document.head.prepend(stylesheet);
+
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNames('tilemap_sheet', {
@@ -61,8 +71,8 @@ class Load extends Phaser.Scene {
         });
 
         // ...and pass to the next Scene
-        //this.scene.start("Start");
-        this.scene.start("platformerScene");
+        this.scene.start("Start");
+        //this.scene.start("platformerScene");
     }
 
     // Never get here since a new scene is started in create()
